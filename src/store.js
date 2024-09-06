@@ -8,18 +8,16 @@ import storage from 'redux-persist/lib/storage'
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import { combineReducers } from 'redux';
 
-const reducer ={
-
-    todos,
-};
-
-const persitConfig={
+const persistConfig = {
     key: 'root',
     storage,
-    stateReconciler:autoMergeLevel2,
-}
-
-const rootReducer = combineReducers(reducer);
-const persitReducer(persitConfig,rootReducer);
-
-export const configureStore = () => createStore(persitReducer);
+  };
+  
+  const rootReducer = combineReducers({
+    todos,
+  });
+  
+  // Correctly assign persistReducer to a variable
+  const persistedReducer = persistReducer(persistConfig, rootReducer);
+ 
+  export const configureStore = () => createStore(persistedReducer);
